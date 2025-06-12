@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Stylish Password Generator</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      text-align: center;
+      width: 350px;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(-20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .input-group {
+      margin: 20px 0;
+    }
+
+    input[type="number"] {
+      width: 60px;
+      padding: 8px;
+      font-size: 16px;
+      border: 2px solid #764ba2;
+      border-radius: 8px;
+    }
+
+    button {
+      padding: 12px 25px;
+      background: #764ba2;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #5b3b91;
+    }
+
+    .password-box {
+      margin-top: 20px;
+      background: #f3f3f3;
+      padding: 15px;
+      border-radius: 10px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 18px;
+      word-wrap: break-word;
+      position: relative;
+    }
+
+    .copy-btn {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      background: transparent;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      color: #764ba2;
+    }
+
+    .copy-btn:hover {
+      color: #5b3b91;
+    }
+
+    .copy-message {
+      color: green;
+      font-size: 14px;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>🔐 Password Generator</h2>
+    
+    <div class="input-group">
+      <label for="length">Password Length: </label>
+      <input type="number" id="length" min="4" max="32" value="12" />
+    </div>
+
+    <button onclick="generatePassword()">Generate Password</button>
+
+    <div class="password-box" id="passwordBox">
+      <span id="passwordOutput">Click Generate</span>
+      <button class="copy-btn" onclick="copyPassword()" title="Copy">📋</button>
+    </div>
+
+    <div class="copy-message" id="copyMessage"></div>
+  </div>
+
+  <script>
+    function generatePassword() {
+      const length = document.getElementById("length").value;
+      const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+{}[]";
+      let password = "";
+      for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * charset.length);
+        password += charset[randomIndex];
+      }
+      document.getElementById("passwordOutput").textContent = password;
+      document.getElementById("copyMessage").textContent = "";
+    }
+
+    function copyPassword() {
+      const password = document.getElementById("passwordOutput").textContent;
+      navigator.clipboard.writeText(password).then(() => {
+        document.getElementById("copyMessage").textContent = "Copied to clipboard!";
+      });
+    }
+  </script>
+
+</body>
+</html>
